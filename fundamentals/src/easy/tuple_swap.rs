@@ -11,8 +11,3 @@ pub fn swap_tuple(t: (i32, i32)) -> (i32, i32) {
     let (first, second) = t;
     return (second, first);
 }
-
-fn main() {
-  let swapped_tuple = swap_tuple((2, 3));
-  println!("{},{}", swapped_tuple.0, swapped_tuple.1);
-}

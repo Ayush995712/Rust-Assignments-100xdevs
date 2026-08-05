@@ -8,5 +8,5 @@
 */
 
 pub fn array_sum(arr: &[i32; 5]) -> i32 {
-    todo!()
+    return arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
 }

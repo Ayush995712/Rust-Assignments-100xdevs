@@ -9,5 +9,5 @@
 */
 
 pub fn celsius_to_fahrenheit(c: f64) -> f64 {
-    todo!()
+    return (c * 1.8) + 32.0;
 }

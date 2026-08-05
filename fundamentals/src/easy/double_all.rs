@@ -9,5 +9,8 @@
 */
 
 pub fn double_all(values: &mut Vec<i32>) {
-    todo!()
+    for i in values {
+      *i *= 2;
+    };
+    return ()
 }

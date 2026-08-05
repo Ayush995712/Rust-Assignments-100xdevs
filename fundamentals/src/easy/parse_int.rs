@@ -7,7 +7,11 @@
   Run the tests for this problem with:
     cargo test --test parse_int_test
 */
+use std::format;
 
 pub fn parse_int(s: &str) -> Result<i32, String> {
-    todo!()
+    return match s.parse() {
+      Ok(parsed_int) => Ok(parsed_int),
+      Err(error) => Err(format!("Problem parsing the string to int: {error}")), 
+    }
 }
