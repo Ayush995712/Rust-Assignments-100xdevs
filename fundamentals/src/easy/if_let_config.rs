@@ -10,5 +10,9 @@
 */
 
 pub fn get_config(value: Option<String>) -> String {
-    todo!()
+    if let Some(config) = value {
+        return config;
+    } else {
+        return String::from("default")
+    }
 }
