@@ -11,5 +11,13 @@
 use std::collections::HashSet;
 
 pub fn unique_elements(v: Vec<i32>) -> Vec<i32> {
-    todo!()
+  let mut set = HashSet::new();
+  let mut unique_ele = Vec::new();
+    for element in v {
+      if !set.contains(&element) {
+        set.insert(element);
+        unique_ele.push(element);
+      }
+    }
+    return unique_ele
 }

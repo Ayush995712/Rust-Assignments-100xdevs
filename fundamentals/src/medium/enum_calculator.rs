@@ -17,5 +17,22 @@ pub enum Operation {
 }
 
 pub fn calculate(op: Operation) -> Result<f64, String> {
-    todo!()
+    match op {
+        Operation::Add(i, j) => {
+            Ok(i + j)
+        },
+        Operation::Sub(i, j) => {
+            Ok(i - j)
+        },
+        Operation::Mul(i, j) => {
+            Ok(i * j)
+        },
+        Operation::Div(i, j) => {
+            if j == 0.0 {
+                Err(String::from("Error"))
+            } else {
+                Ok(i / j)
+            }
+        }
+    }
 }
