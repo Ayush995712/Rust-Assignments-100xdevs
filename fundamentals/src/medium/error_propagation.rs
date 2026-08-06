@@ -10,8 +10,8 @@
     cargo test --test error_propagation_test
 */
 
-use std::todo;
-
 pub fn parse_and_add(a: &str, b: &str) -> Result<i32, std::num::ParseIntError> {
-    todo!()
+    let parsed_a: i32 = a.parse()?;
+    let parsed_b: i32 = b.parse()?;
+    return Ok(parsed_a + parsed_b)
 }

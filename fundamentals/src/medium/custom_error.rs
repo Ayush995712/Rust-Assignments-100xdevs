@@ -10,6 +10,8 @@
     cargo test --test custom_error_test
 */
 
+use crate::medium::custom_error::ValidationError::{InvalidChar, TooLong, TooShort};
+
 #[derive(Debug, PartialEq)]
 pub enum ValidationError {
     TooShort,
@@ -18,5 +20,15 @@ pub enum ValidationError {
 }
 
 pub fn validate_username(username: &str) -> Result<(), ValidationError> {
-    todo!()
+    if username.len() < 3 {
+        return Err(TooShort)
+    } else if username.len() > 20 {
+        return Err(TooLong)
+    };
+    for c in username.chars() {
+        if !(c.is_alphanumeric() || c == '_') {
+            return Err(InvalidChar(c))
+        }
+    };
+    return Ok(())
 }
