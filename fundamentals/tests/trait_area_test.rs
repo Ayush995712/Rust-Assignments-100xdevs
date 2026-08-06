@@ -1,4 +1,4 @@
-use fundamentals::medium::trait_area::{print_area, Circle, Shape, Square};
+use fundamentals::medium::trait_area::{print_area, Circle, Square};
 
 #[test]
 fn test_circle() {
