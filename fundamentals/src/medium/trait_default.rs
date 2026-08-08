@@ -13,7 +13,7 @@ pub trait Greet {
     fn name(&self) -> &str;
 
     fn greeting(&self) -> String {
-        format!("Hello, {}!", self.name())
+        return format!("Hello, {}!", self.name())
     }
 }
 
@@ -23,6 +23,6 @@ pub struct Person {
 
 impl Greet for Person {
     fn name(&self) -> &str {
-        todo!()
+        self.name.as_str()
     }
 }
