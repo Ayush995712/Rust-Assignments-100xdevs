@@ -9,6 +9,29 @@
     cargo test --test string_compression_test
 */
 
+use std::format;
+
 pub fn compress(s: &str) -> String {
-    todo!()
+   if s.is_empty() { return String::new() };
+
+   let mut compressed_string = String::new();
+   let mut count = 1;
+   let mut current_char = s.chars().next().unwrap();
+
+   for c in s[1..].chars() {
+    if current_char == c {
+      count += 1;
+    } else {
+      compressed_string.push_str(&format!("{}{}", current_char, count));
+      current_char = c;
+      count = 1;
+    }
+   }
+   compressed_string.push_str(&format!("{}{}", current_char, count));
+   if compressed_string.len() >= s.len() {
+     return s.to_string() 
+   } 
+   else {
+    return compressed_string
+   }
 }
