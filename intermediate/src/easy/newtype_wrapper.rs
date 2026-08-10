@@ -19,7 +19,7 @@ pub struct Kilometers(pub f64);
 
 impl From<Meters> for Kilometers {
     fn from(m: Meters) -> Self {
-        todo!()
+        Kilometers(m.0 / 1000.0)
     }
 }
 
@@ -27,6 +27,6 @@ impl Add for Meters {
     type Output = Meters;
 
     fn add(self, rhs: Self) -> Self::Output {
-        todo!()
+        Meters(self.0 + rhs.0)
     }
 }
