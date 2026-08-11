@@ -17,13 +17,9 @@ pub enum List {
 
 impl List {
     pub fn sum(&self) -> i32 {
-        let mut sum = 0;
         match self {
-            List::Cons(value, next) => {
-                sum = value + next.sum();
-                return sum
-            }
-            List::Nil => { return 0 }
+            List::Cons(value, next) => value + next.sum(),
+            List::Nil => 0,
         }
     }
 
