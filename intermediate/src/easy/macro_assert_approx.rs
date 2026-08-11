@@ -12,9 +12,11 @@
 #[macro_export]
 macro_rules! assert_approx_eq {
     ($a:expr, $b:expr) => {
-        todo!()
+        let f: f64 = $a - $b;
+        if f.abs() > 1e-10 { panic!("values are not approximately equal") }
     };
     ($a:expr, $b:expr, $eps:expr) => {
-        todo!()
+        let f: f64 = $a - $b;
+        if f.abs() > $eps { panic!("values are not approximately equal") }
     };
 }
