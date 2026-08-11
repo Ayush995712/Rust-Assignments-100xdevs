@@ -9,5 +9,20 @@
 */
 
 pub fn compute_checksum(data: &[u8]) -> u8 {
-    todo!()
+    if data.is_empty() { return 0 };
+
+    let mut fir = data[0];
+
+    for d in &data[1..] {
+      fir ^= *d;
+    };
+    return fir
 }
+
+/* More idiomatic way
+
+  pub fn compute_checksum(data: &[u8]) -> u8 {
+    data.iter().fold(0, |acc, &byte| acc ^ byte)
+}
+    
+*/
