@@ -10,5 +10,5 @@
 */
 
 pub fn type_info<T>() -> (usize, usize) {
-    todo!()
+    (size_of::<T>(), align_of::<T>())
 }
