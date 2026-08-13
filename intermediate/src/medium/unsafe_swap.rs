@@ -9,8 +9,8 @@
 */
 
 pub fn unsafe_swap(a: &mut i32, b: &mut i32) {
-    let first = a as *mut i32;
-    let second = b as *mut i32;
+    let first = a as *mut i32;   // let first = &raw mut *a;
+    let second = b as *mut i32;  // let second = &raw mut *b;
     unsafe {
       let swap = *first;
       *first = *second;
