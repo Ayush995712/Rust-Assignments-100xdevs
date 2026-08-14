@@ -10,13 +10,20 @@
 */
 
 pub fn set_bit(value: u32, bit: u8) -> u32 {
-    todo!()
+    let bit_position = 1u32 << bit;
+    value | bit_position
 }
 
 pub fn clear_bit(value: u32, bit: u8) -> u32 {
-    todo!()
+    let bit_position = !(1u32 << bit);
+    value & bit_position 
 }
 
 pub fn toggle_bit(value: u32, bit: u8) -> u32 {
-    todo!()
+    let bit_position = 1u32 << bit;
+    if value & bit_position != 0u32 {
+        clear_bit(value, bit)
+    } else {
+        set_bit(value, bit)
+    }
 }
