@@ -10,9 +10,13 @@
 */
 
 pub fn pack_u16(high: u16, low: u16) -> u32 {
-    todo!()
+    let pack = high as u32;
+    let pack_s = pack << 16;
+    pack_s | (low as u32)
 }
 
 pub fn unpack_u32(packed: u32) -> (u16, u16) {
-    todo!()
+    let high = ((packed >> 16) & 0xFFFFu32) as u16;
+    let low = (packed & 0xFFFFu32) as u16;
+    (high, low)
 }
