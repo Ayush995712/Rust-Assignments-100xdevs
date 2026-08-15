@@ -10,5 +10,10 @@
 */
 
 pub fn rotate_left(arr: [u8; 8], count: usize) -> [u8; 8] {
-    todo!()
+  let rotation = count % 8;
+  let mut result = [0u8; 8];
+  for (i, ele) in arr.iter().cycle().skip(rotation).take(8).enumerate() {
+    result[i] = *ele;
+  };
+  result
 }
