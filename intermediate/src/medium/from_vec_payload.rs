@@ -15,6 +15,13 @@ pub struct Payload {
 
 impl From<Vec<u16>> for Payload {
     fn from(v: Vec<u16>) -> Self {
-        todo!()
+        let mut vec_8 = Vec::new();
+        for vec in v {
+            let upper = ((vec >> 8) & 255u16) as u8;
+            let lower = (vec & 255u16) as u8;
+            vec_8.push(upper);
+            vec_8.push(lower);
+        }
+        Self { data: vec_8 }
     }
 }
