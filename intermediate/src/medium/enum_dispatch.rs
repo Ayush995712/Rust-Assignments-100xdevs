@@ -13,11 +13,11 @@ pub struct Circle { pub radius: f64 }
 pub struct Square { pub side: f64 }
 
 impl Circle {
-    pub fn area(&self) -> f64 { todo!() }
+    pub fn area(&self) -> f64 { std::f64::consts::PI * self.radius * self.radius }
 }
 
 impl Square {
-    pub fn area(&self) -> f64 { todo!() }
+    pub fn area(&self) -> f64 { self.side * self.side }
 }
 
 pub enum Shape {
@@ -27,6 +27,9 @@ pub enum Shape {
 
 impl Shape {
     pub fn area(&self) -> f64 {
-        todo!()
+        match self {
+            Shape::Circle(circle) => circle.area(),
+            Shape::Square(square) => square.area()
+        }
     }
 }
