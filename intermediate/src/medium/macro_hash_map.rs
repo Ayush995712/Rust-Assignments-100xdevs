@@ -11,6 +11,12 @@
 #[macro_export]
 macro_rules! hash_map {
     ($($key:expr => $val:expr),* $(,)?) => {
-        todo!()
+        {
+            let mut temp_hash = HashMap::new();
+        $(
+            temp_hash.entry($key).or_insert($val);
+        )*
+        temp_hash
+        }
     };
 }
