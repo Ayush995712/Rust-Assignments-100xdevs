@@ -13,6 +13,12 @@
 #[macro_export]
 macro_rules! vec_of_strings {
     ($($x:expr),*) => {
-        todo!()
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x.to_string());
+            )*
+            temp_vec
+        }
     };
 }
