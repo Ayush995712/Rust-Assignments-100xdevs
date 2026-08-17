@@ -11,5 +11,9 @@
 */
 
 pub fn is_crate_active(crate_name: &str) -> bool {
-    todo!()
+    if crate_name == "fundamentals" || crate_name == "intermediate" || crate_name == "async" {
+      return true
+    } else {
+      return false
+    }
 }
