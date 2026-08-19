@@ -30,10 +30,38 @@ impl AccountData for TokenAccount {
     }
 
     fn serialize(&self) -> Vec<u8> {
-        todo!()
+        let mut vec_acc = Vec::new();
+        let dis = TokenAccount::discriminator();
+        for i in dis {
+            vec_acc.push(i);
+        };
+        for i in self.owner {
+            vec_acc.push(i);
+        };
+        for i in self.amount.to_le_bytes() {
+            vec_acc.push(i);
+        };
+        vec_acc
     }
 
     fn deserialize(data: &[u8]) -> Result<Self, String> {
-        todo!()
+        if data.len() != 48 {
+            return Err("Length should be 48".to_string())
+        }
+
+        for (i, j) in data[..8].iter().enumerate() {
+            if TokenAccount::discriminator()[i] != *j {
+                return Err("Deserialized data does not match with TokenAccount::Discriminator()".to_string());
+            }
+        }
+
+        let mut owner = [0u8; 32];
+        owner.copy_from_slice(&data[8..40]);
+
+        let amount = u64::from_le_bytes(data[40..48].try_into().map_err(|_| "Invalid amount length".to_string())?);
+         Ok(Self {
+                owner,
+                amount,
+         })
     }
 }

@@ -16,7 +16,7 @@ fn test_roundtrip() {
 
 #[test]
 fn test_invalid_discriminator() {
-    let mut bytes = vec![0u8; 48];
+    let bytes = vec![0u8; 48];
     assert!(TokenAccount::deserialize(&bytes).is_err());
 }
 
