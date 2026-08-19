@@ -16,18 +16,29 @@ pub struct PackedFlags {
 
 impl PackedFlags {
     pub fn new() -> Self {
-        todo!()
+        Self { bits: 0 }
     }
 
     pub fn set(&mut self, index: u8, value: bool) {
-        todo!()
+        if value {
+            let rot = 1u8 << index;
+            self.bits |= rot;
+        } else {
+            let rot = !(1u8 << index);
+            self.bits &= rot;
+        }
     }
 
     pub fn get(&self, index: u8) -> bool {
-        todo!()
+        let rot = 1u8 << index;
+        if (rot & self.bits) == 0u8 {
+            return false
+        } else {
+            return true
+        }
     }
 
     pub fn as_byte(&self) -> u8 {
-        todo!()
+        self.bits
     }
 }
