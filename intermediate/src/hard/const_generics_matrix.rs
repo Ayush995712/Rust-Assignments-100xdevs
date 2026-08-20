@@ -15,10 +15,13 @@ pub struct Matrix<T, const R: usize, const C: usize> {
 
 impl<T: Copy, const R: usize, const C: usize> Matrix<T, R, C> {
     pub fn new(data: [[T; C]; R]) -> Self {
-        todo!()
+        Self { data: data }
     }
 
     pub fn get(&self, r: usize, c: usize) -> Option<&T> {
-        todo!()
+        if r >= R || c >= C {
+            return None
+        };
+        Some(&self.data[r][c])
     }
 }
