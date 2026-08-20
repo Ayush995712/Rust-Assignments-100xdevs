@@ -19,13 +19,13 @@ pub struct AddOne;
 pub struct Double;
 
 impl Plugin for AddOne {
-    fn name(&self) -> &str { todo!() }
-    fn run(&self, input: i32) -> i32 { todo!() }
+    fn name(&self) -> &str { "AddOne" }
+    fn run(&self, input: i32) -> i32 { input + 1 }
 }
 
 impl Plugin for Double {
-    fn name(&self) -> &str { todo!() }
-    fn run(&self, input: i32) -> i32 { todo!() }
+    fn name(&self) -> &str { "Double" }
+    fn run(&self, input: i32) -> i32 { input * 2 }
 }
 
 pub struct PluginManager {
@@ -34,14 +34,18 @@ pub struct PluginManager {
 
 impl PluginManager {
     pub fn new() -> Self {
-        todo!()
+        Self { plugins: Vec::new() }
     }
 
     pub fn add(&mut self, plugin: Box<dyn Plugin>) {
-        todo!()
+        self.plugins.push(plugin);
     }
 
     pub fn run_all(&self, input: i32) -> i32 {
-        todo!()
+        let mut res = input;
+        for plugin in &self.plugins {
+            res = plugin.run(res);
+        };
+        res
     }
 }
