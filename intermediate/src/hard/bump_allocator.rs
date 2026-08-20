@@ -16,10 +16,16 @@ pub struct BumpAllocator {
 
 impl BumpAllocator {
     pub fn new() -> Self {
-        todo!()
+        Self { buffer: [0; 1024], cursor: 0 }
     }
 
     pub fn alloc(&mut self, size: usize) -> Result<&mut [u8], String> {
-        todo!()
+        if size > (self.buffer.len() - self.cursor)  {
+            return Err("available size is less than what you demand".to_string());
+        }
+
+        let c = self.cursor;
+        self.cursor += size;
+        Ok(&mut self.buffer[c..self.cursor])
     }
 }
