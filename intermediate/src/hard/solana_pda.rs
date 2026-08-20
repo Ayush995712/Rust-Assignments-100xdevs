@@ -11,5 +11,13 @@
 */
 
 pub fn derive_pda(program_id: [u8; 32], seeds: &[&[u8]]) -> [u8; 32] {
-    todo!()
+  let mut pda = program_id;
+
+  for seed in seeds {
+    assert!(seed.len() <= 32);
+    for (i, s) in seed.iter().enumerate() {
+      pda[i] ^= s;
+    }
+  };
+  pda
 }
