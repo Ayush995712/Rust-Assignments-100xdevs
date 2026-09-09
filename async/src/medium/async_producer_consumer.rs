@@ -12,5 +12,19 @@
 use tokio::sync::mpsc;
 
 pub async fn async_producer_consumer() -> Vec<i32> {
-    todo!()
+  let (tx, mut rx) = mpsc::channel(10);
+  let mut v = vec![];
+
+  tokio::spawn(async move {
+    for i in 1..11 {
+      tx.send(i).await.unwrap();
+    }
+  });
+
+  for _i in 1..11 {
+    let res = rx.recv().await.unwrap();
+    v.push(res);
+  };
+
+  v
 }
