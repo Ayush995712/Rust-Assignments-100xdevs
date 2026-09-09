@@ -13,5 +13,19 @@ use std::sync::mpsc;
 use std::thread;
 
 pub fn producer_consumer() -> Vec<i32> {
-    todo!()
+    let (tx, rx) = mpsc::channel();
+    let mut v = vec![];
+
+    thread::spawn(move || {
+      for i in 1..6 {
+        tx.send(i).unwrap();
+      }
+    });
+
+    for _i in 1..6 {
+      let res = rx.recv().unwrap();
+      v.push(res);
+    };
+
+    v
 }
