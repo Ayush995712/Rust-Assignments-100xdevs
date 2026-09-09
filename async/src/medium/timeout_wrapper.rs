@@ -16,5 +16,9 @@ pub async fn timeout_wrapper<F, T>(f: F, duration: Duration) -> Result<T, String
 where
     F: Future<Output = T>,
 {
-    todo!()
+    let res = timeout(duration, f).await;
+    if res.is_err() {
+        return Err("Timeout".to_string())
+    };
+    Ok(res.unwrap())
 }
