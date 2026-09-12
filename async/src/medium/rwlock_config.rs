@@ -19,5 +19,28 @@ pub struct Config {
 }
 
 pub fn update_and_read_config() -> String {
-    todo!()
+    let mut scores = HashMap::new();
+    scores.insert("Blue".to_string(), "10".to_string());
+
+    let locked_config = Arc::new(RwLock::new(Config { settings: scores}));
+    let cloned_config_to_read_finally = Arc::clone(&locked_config);
+
+    for i in 0..5 {
+        let cloned_config = Arc::clone(&locked_config);
+        thread::spawn(move || {
+            let value = cloned_config.read().unwrap();
+            let key_to_check = String::from("Blue");
+            println!("Reader {}, key = {}", i, value.settings.get(&key_to_check).unwrap());
+        });
+    }
+
+    thread::spawn(move || {
+        let cloned_config = Arc::clone(&locked_config);
+        let mut value = cloned_config.write().unwrap();
+        value.settings.insert(String::from("Blue"), "25".to_string());
+    });
+
+    let config = cloned_config_to_read_finally.read().unwrap();
+    let result = config.settings.get("Blue").cloned().unwrap();
+    result
 }
