@@ -23,12 +23,12 @@ pub fn multithreaded_counter() -> i32 {
       *num += 100;
     });
     handles.push(handle);
-  };
+  }
 
   for handle in handles {
     handle.join().unwrap();
-  };
+  }
 
-  let res = *counter.lock().unwrap();
-  res
+  let result = *counter.lock().unwrap();
+  result
 }
