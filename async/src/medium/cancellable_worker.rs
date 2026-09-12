@@ -16,5 +16,16 @@ use std::thread;
 use std::time::Duration;
 
 pub fn cancellable_worker() {
-    todo!()
+  let some_bool = Arc::new(AtomicBool::new(false));
+  let clone_some_bool = Arc::clone(&some_bool);
+
+  thread::spawn(move || {
+    loop {
+      thread::sleep(Duration::from_millis(10));
+      if clone_some_bool.load(Ordering::Relaxed) { break };
+    }
+  });
+
+  thread::sleep(Duration::from_millis(50));
+  some_bool.store(true, Ordering::Relaxed);
 }
