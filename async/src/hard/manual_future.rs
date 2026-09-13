@@ -21,6 +21,9 @@ impl<T: Unpin> Future for ReadyFuture<T> {
     type Output = T;
 
     fn poll(mut self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<Self::Output> {
-        todo!()
+        match self.value.take() {
+            Some(value) => Poll::Ready(value),
+            None => panic!("ReadyFuture polled after completion")
+        }
     }
 }
