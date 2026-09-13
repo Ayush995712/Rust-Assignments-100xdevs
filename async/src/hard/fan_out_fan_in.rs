@@ -10,19 +10,18 @@
 */
 
 pub async fn fan_out_fan_in(v: Vec<i32>) -> i32 {
-    let mut values = vec![];
+    let mut handles = vec![];
     let mut sum = 0;
 
     for value in v {
       let handle = tokio::task::spawn(async move {
         value * value
       });
-      let res = handle.await.unwrap();
-      values.push(res);
+      handles.push(handle);
     }
 
-    for value in values {
-      sum += value;
+    for handle in handles {
+      sum += handle.await.unwrap();
     }
 
     sum
