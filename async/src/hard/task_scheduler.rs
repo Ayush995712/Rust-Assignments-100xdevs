@@ -45,21 +45,38 @@ impl TaskScheduler {
         self.notify.notify_one();
     }
 
-    pub async fn start(&self) {
-        let notify = Notify::new();
-        loop {
-            if self.tasks.lock().unwrap().is_empty() {
-                notify.notified().await;
-            };
+    pub fn start(&self) {
+        let tasks = Arc::clone(&self.tasks);
+        let notify = Arc::clone(&self.notify);
 
-            let (instant_to_execute, closure_to_execute) = {
-                let mut task_to_execute = self.tasks.lock().unwrap();
-                task_to_execute.remove(0)
-            };
+        tokio::spawn(async move {
+            loop {
+                let next_time = {
+                    let guard = tasks.lock().unwrap();
+                    guard.first().map(|(t, _)| *t)
+                };
 
-            let duration_to_wait = instant_to_execute - Instant::now();
-            sleep(duration_to_wait).await;
-            closure_to_execute();
-        }
+                match next_time {
+                    Some(execute_at) => {
+                        let now = Instant::now();
+                        if execute_at <= now {
+                            let task = {
+                                let mut guard = tasks.lock().unwrap();
+                                guard.remove(0)
+                            };
+                            (task.1)();
+                        } else {
+                            tokio::select! {
+                                _ = sleep(execute_at - now) => {}
+                                _ = notify.notified() => {}
+                            }
+                        }
+                    }
+                    None => {
+                        notify.notified().await;
+                    }
+                }
+            }
+        });
     }
 }
