@@ -1,5 +1,4 @@
 use r#async::hard::rate_limiter::RateLimiter;
-use std::time::Instant;
 
 #[tokio::test]
 async fn test_limiter_permits() {
