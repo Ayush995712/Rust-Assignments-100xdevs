@@ -21,14 +21,36 @@ type Job = Box<dyn FnOnce() + Send + 'static>;
 
 impl ThreadPool {
     pub fn new(size: usize) -> Self {
-        todo!()
+        assert!(size > 0);
+        let mut worker_vec = Vec::new();
+        let (sender, receiver) = mpsc::channel::<Job>();
+        let shareable_receiver = Arc::new(Mutex::new(receiver));
+
+        for s in 0..size {
+            let clone_receiver = Arc::clone(&shareable_receiver);
+            let handle = thread::spawn(move || {
+                loop {
+                    let lock_receiver = clone_receiver.lock().unwrap();
+                    let job_to_do = lock_receiver.recv();
+                    drop(lock_receiver);
+                    
+                    match job_to_do {
+                        Ok(job) => job(),
+                        Err(_) => break,
+                    }
+                }
+            });
+            worker_vec.push(Worker { id: s, thread: Some(handle) });
+        };
+        Self { workers: worker_vec, sender: sender }
     }
 
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,
     {
-        todo!()
+        let job = Box::new(f);
+        self.sender.send(job).unwrap()
     }
 }
 
